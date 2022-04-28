@@ -14,7 +14,9 @@ const outputTitle = document.querySelector(".output-title");
 
 const result = (name, image, rank, ticker) => {
   coinName.insertAdjacentHTML("beforeend", name);
-  coinRank.insertAdjacentHTML("beforeend", rank);
+  rank === null
+    ? coinRank.insertAdjacentHTML("beforeend", "Unranked")
+    : coinRank.insertAdjacentHTML("beforeend", rank);
   coinTicker.insertAdjacentHTML("beforeend", ticker);
   coinImage.src = image;
   searchButton.disabled = true;
@@ -29,22 +31,20 @@ const result = (name, image, rank, ticker) => {
 };
 
 searchButton.addEventListener("click", () => {
-  let value;
-
   const renderResult = function (blockchain, address) {
     fetch(
       `https://api.coingecko.com/api/v3/coins/${blockchain}/contract/${address}`
     )
-      .then(function (response) {
+      .then((response) => {
         return response.json();
       })
-      .then(function (data) {
+      .then((data) => {
         console.log(data);
         result(data.name, data.image.small, data.market_cap_rank, data.symbol);
       });
   };
   // console.log(blockchainOptions.value);
-  value = addressInput.value;
+  let value = addressInput.value;
   renderResult(blockchainOptions.value, value);
 });
 
@@ -52,8 +52,11 @@ resetButton.addEventListener("click", () => {
   addressInput.value = "";
   blockchainOptions.value = "avalanche";
   coinName.classList.add("hidden");
+  coinName.textContent = "Token:";
   coinRank.classList.add("hidden");
+  coinRank.textContent = "Rank:";
   coinTicker.classList.add("hidden");
+  coinTicker.textContent = "Ticker: $";
   coinImage.classList.add("hidden");
   outputTitle.classList.add("hidden");
   questionMark.classList.remove("hidden");
@@ -67,8 +70,6 @@ resetButton.addEventListener("click", () => {
     const randomNum1 = Math.trunc(Math.random() * 255 + 1);
     const randomNum2 = Math.trunc(Math.random() * 255 + 1);
     const randomNum3 = Math.trunc(Math.random() * 255 + 1);
-    questionMark.style.color = `rgb(${randomNum1}, ${randomNum2}, ${randomNum3})`;
-    questionMark.style.color = `rgb(${randomNum1}, ${randomNum2}, ${randomNum3})`;
     questionMark.style.color = `rgb(${randomNum1}, ${randomNum2}, ${randomNum3})`;
   }, 1000);
 })();
