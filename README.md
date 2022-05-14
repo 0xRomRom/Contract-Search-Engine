@@ -1,4 +1,4 @@
-# Contract Search Engine
+# Crypto Contract Search Engine
 Find listed crypto currencies by contract address & blockchain.
 
 ## Test with:
