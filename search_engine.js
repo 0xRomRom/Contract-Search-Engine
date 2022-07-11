@@ -37,6 +37,9 @@ searchButton.addEventListener("click", () => {
         `https://api.coingecko.com/api/v3/coins/${blockchain}/contract/${address}`
       )
         .then((response) => {
+          if (!response.ok) {
+            throw new Error("Blockchain & coin address do not match");
+          }
           return response.json();
         })
         .then((data) => {
