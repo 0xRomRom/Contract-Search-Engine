@@ -31,21 +31,27 @@ const result = (name, image, rank, ticker) => {
 };
 
 searchButton.addEventListener("click", () => {
-  const renderResult = function (blockchain, address) {
-    fetch(
-      `https://api.coingecko.com/api/v3/coins/${blockchain}/contract/${address}`
-    )
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        result(data.name, data.image.small, data.market_cap_rank, data.symbol);
-      });
-  };
-  // console.log(blockchainOptions.value);
-  let value = addressInput.value;
-  renderResult(blockchainOptions.value, value);
+  try {
+    const renderResult = async function (blockchain, address) {
+      await fetch(
+        `https://api.coingecko.com/api/v3/coins/${blockchain}/contract/${address}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          result(
+            data.name,
+            data.image?.small,
+            data.market_cap_rank,
+            data.symbol
+          );
+        });
+    };
+    renderResult(blockchainOptions.value, addressInput.value);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 resetButton.addEventListener("click", () => {
