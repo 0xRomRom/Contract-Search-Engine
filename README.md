@@ -1,6 +1,6 @@
 # Crypto Contract Search Engine
 
-### This app is build to solve the problem: where you find an unknown token in your wallet, and don't know the name or market.
+### Simple CoinGecko API fetching tool. Display all crypto currencies that are listed currently.
 
 ## How to use
 
